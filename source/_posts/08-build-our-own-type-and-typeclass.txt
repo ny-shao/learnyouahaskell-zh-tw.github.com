@@ -325,7 +325,8 @@ tellCar (Car {company = c, model = m, year = y}) = "This " ++ c ++ " " ++ m ++ "
 
 {{
 ghci> let stang = Car {company="Ford", model="Mustang", year=1967}
-ghci> tellCar stang  "This Ford Mustang was made in 1967"
+ghci> tellCar stang  
+"This Ford Mustang was made in 1967"
 }}
 
 可愛的小函數！它的型別聲明得很漂亮，而且工作良好。好，如果改成 ``Car a b c`` 又會怎樣？
@@ -493,14 +494,14 @@ ghci> True `compare` False
 GT
 ghci> True > False
 True
-ghci> True
+ghci> True < False
 False
 }}
 
 在 ``Maybe a`` 數據型別中，值構造子 ``Nothing`` 在 ``Just`` 值構造子前面，所以一個 ``Nothing`` 總要比 ``Just something`` 的值小。即便這個 ``something`` 是 ``-100000000`` 也是如此。
 
 {{
-ghci> Nothing
+ghci> Nothing < Just 100
 True
 ghci> Nothing > Just (-49999)
 False
@@ -633,7 +634,7 @@ inPhoneBook name pnumber pbook = (name,pnumber) `elem` pbook
 type AssocList k v = [(k,v)]
 }}
 
-好的，現在一個從關聯 List 中按鍵索值的函數型別可以定義為 ``(Eq k) => k -> AssocList k v -> Maybe v. AssocList i``。``AssocList`` 是個取兩個型別做參數生成一個具體型別的型別構造子，如 ``Assoc Int String`` 等等。
+好的，現在一個從關聯 List 中按鍵索值的函數型別可以定義為 ``(Eq k) => k -> AssocList k v -> Maybe v``。``AssocList`` 是個取兩個型別做參數生成一個具體型別的型別構造子，如 ``Assoc Int String`` 等等。
 
     *Fronzie 說*：Hey！當我提到具體型別，那我就是說它是完全呼叫的，就像 ``Map Int String``。要不就是多態函數中的 ``[a]`` 或 ``(Ord a) => Maybe a`` 之類。有時我和孩子們會說 "Maybe 型別"，但我們的意思並不是按字面來，傻瓜都知道 ``Maybe`` 是型別構造子嘛。只要用一個明確的型別呼叫 ``Maybe``，如 ``Maybe String`` 可得一個具體型別。你知道，只有具體型別才可以儲存值。
 
